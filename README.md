@@ -19,17 +19,15 @@ Folder Structure:
       ├── Strategy.Web
       └── Strategy.Domain
           └── ShippingService
-              └── FedExShippingCostStrategy.cs
-              └── IShippingCostStrategy.cs
               └── ShippingCostCalculatorService.cs
+              └── IShippingCostStrategy.cs
+              └── FedExShippingCostStrategy.cs
               └── UPSShippingCostStrategy.cs
               └── USPSShippingCostStrategy.cs
               
 ``` 
 
-It's a shipping calculator written in C# to demonstrate the benefits of the pattern:
-
-The code below violates the open/closed principal and needs to be refactored: 
+Let's start by opening the class [ShippingCostCalculatorService.cs](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCostCalculatorService.cs):
 
     public class ShippingCostCalculatorService
     {
@@ -52,4 +50,7 @@ The code below violates the open/closed principal and needs to be refactored:
         }
     }  
 
-The code above [can be find here](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCostCalculatorService.cs)
+This class calculates the shipping costs for 3 diffrent carriers (FedEx, UPS and USPS). It does the job, but it violates the open/closed principle.
+
+Second problem, this class creates the change of throwing an exception.
+
