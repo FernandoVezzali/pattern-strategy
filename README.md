@@ -19,10 +19,10 @@ Folder Structure:
       ├── Strategy.Web
       └── Strategy.Domain
           └── ShippingService
-              └── ShippingCostCalculatorService.cs
-              └── IShippingCostStrategy.cs
-              └── FedExShippingCostStrategy.cs
-              └── UPSShippingCostStrategy.cs
+              ├── ShippingCostCalculatorService.cs
+              ├── IShippingCostStrategy.cs
+              ├── FedExShippingCostStrategy.cs
+              ├── UPSShippingCostStrategy.cs
               └── USPSShippingCostStrategy.cs
               
 ``` 
@@ -48,9 +48,30 @@ Let's start by opening the class [ShippingCostCalculatorService.cs](https://gith
                   throw new UnknownOrderShippingMethodException();
             }
         }
+        
+        double CalculateForUSPS(Order order)
+        {
+            return 3.00d;
+        }
+
+        double CalculateForUPS(Order order)
+        {
+            return 4.25d;
+        }
+
+        double CalculateForFedEx(Order order)
+        {
+            return 5.00d;
+        }        
     }  
 
-This class calculates the shipping costs for 3 diffrent carriers (FedEx, UPS and USPS). It does the job, but it violates the open/closed principle.
+The only responsability of the class above is to calculate shipping costs, at the moment only 3 diffrent carriers are supported: FedEx, UPS and USPS. In terms of design, there's a few flaws: 
 
-Second problem, this class creates the change of throwing an exception.
+1 - If in the future we need to add a new carrier, let's say DHL, we would have to modify the implementation of this class and that violates the open/closed principle, that states: A class should be open for extension not for modification.
+
+2 - In a real world scenario the three methods: CalculateForUSPS, CalculateForUPS and CalculateForFedEx would have an algoritham and ideally they should be kept isolated from each other as any interference wouldn't be desireble.
+
+3 - If this class gets an order that containing an unknown carrier, it will throw an exception that adds antoher undesireble side effect to this class.
+
+This class is doing too many things.
 
