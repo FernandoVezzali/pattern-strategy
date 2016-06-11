@@ -125,8 +125,20 @@ The last step is go back to the ShippingCostCalculatorService class and create a
 
 Now our class does only one thing, it calculates the shipping cost and even better, it doesn't need to know what's the carrier and there's no risk of throwing exceptions.
 
-| Metric                         | ShippingCostCalculatorService           | Cool  |
-| ------------------------------ |:---------------------------------------:| -----:|
-| Mainatability Index - Before   | right-aligned                           | $1600 |
-| Mainatability Index - After    | centered                                |   $12 |
+| Metric                         | ShippingCostCalculatorService           
+| ------------------------------ |:---------------------------------------:|
+| Maintainability Index - Before | 84                                      |
+| Maintainability Index - After  | 85                                      |
+| Cyclomatic Complexity - Before | 8                                       |
+| Cyclomatic Complexity - After  | 2                                       |
+| Depth of Inheritance  - Before | 1                                       |
+| Depth of Inheritance  - After  | 1                                       |
+| Class Coupling        - Before | 3                                       |
+| Class Coupling        - After  | 2                                       |
+| Lines of Code         - Before | 13                                      |
+| Lines of Code         - After  | 4                                       |
+
+
+
+
 
