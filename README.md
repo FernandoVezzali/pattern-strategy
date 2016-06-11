@@ -125,7 +125,7 @@ The last step is go back to the ShippingCostCalculatorService class and create a
 
 Now our class does only one thing, it calculates the shipping cost and even better, it doesn't need to know what's the carrier and there's no risk of throwing exceptions.
 
-Now let's check the metrics for the ShippingCostCalculatorService class:
+Now let's check the metrics before and after for the [ShippingCostCalculatorService](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/Strategy.Domain/ShippingService/ShippingCostCalculatorService.cs) class:
 
 | Metric                         | Before     | After     | 
 | ------------------------------ |:----------:|:----------:
