@@ -67,11 +67,66 @@ Let's start by opening the class [ShippingCostCalculatorService.cs](https://gith
 
 The only responsability of the class above is to calculate shipping costs, at the moment only 3 diffrent carriers are supported: FedEx, UPS and USPS. In terms of design, there's a few flaws: 
 
-1 - If in the future we need to add a new carrier, let's say DHL, we would have to modify the implementation of this class and that violates the open/closed principle, that states: A class should be open for extension not for modification.
+1. If in the future we need to add a new carrier, let's say DHL, we would have to modify the implementation of this class and that violates the open/closed principle, that states: A class should be open for extension not for modification.
 
-2 - In a real world scenario the three methods: CalculateForUSPS, CalculateForUPS and CalculateForFedEx would have an algoritham and ideally they should be kept isolated from each other as any interference wouldn't be desireble.
+2. In a real world scenario the three methods: CalculateForUSPS, CalculateForUPS and CalculateForFedEx would have an algoritham and ideally they should be kept isolated from each other as any interference wouldn't be desireble.
 
-3 - If this class gets an order that containing an unknown carrier, it will throw an exception that adds antoher undesireble side effect to this class.
+3. If this class gets an order that contains an unknown carrier, an exception will br thrown and that's an undesireble side effect.
 
-This class is doing too many things.
+This class is doing too many things, let's start by extracting the three methods responsible for the cost calculation. These methods are very similar, they take an order as an argument and return a double. With that said the let's create the following interface:
+
+    public interface IShippingCostStrategy
+    {
+        double Calculate(Order order);
+    }
+    
+Now we can create 3 classes, implementing the interface we've just created:
+
+    public class FedExShippingCostStrategy : IShippingCostStrategy
+    {
+        public double Calculate(Order order)
+        {
+            return 5.00d;
+        }
+    }
+    
+    public class UPSShippingCostStrategy : IShippingCostStrategy
+    {
+        public double Calculate(Order order)
+        {
+            return 4.25d;
+        }
+    }
+    
+    public class USPSShippingCostStrategy : IShippingCostStrategy
+    {
+        public double Calculate(Order order)
+        {
+            return 3.00d;
+        }
+    }
+    
+The last step is go back to the ShippingCostCalculatorService class and create a new constructor:
+
+    public class ShippingCostCalculatorService
+    {
+        readonly IShippingCostStrategy shippingCostStrategy;
+
+        public ShippingCostCalculatorService(IShippingCostStrategy shippingCostStrategy)
+        {
+            this.shippingCostStrategy = shippingCostStrategy;
+        }
+
+        public double CalculateShippingCost(Order order)
+        {
+           return shippingCostStrategy.Calculate(order);
+        }
+    }
+
+Now our class does only one thing, it calculates the shipping cost and even better, it doesn't need to know what's the carrier and there's no risk of throwing exceptions.
+
+| Metric                         | ShippingCostCalculatorService           | Cool  |
+| ------------------------------ |:---------------------------------------:| -----:|
+| Mainatability Index - Before   | right-aligned                           | $1600 |
+| Mainatability Index - After    | centered                                |   $12 |
 
