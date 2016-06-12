@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Strategy.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,14 @@ namespace Strategy.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            var order = new Order()
+            {
+                ShippingMethod = Order.ShippingOptions.FedEx,
+                Origin = new Address() { ContactName = "John Smith" }
+            };
+
+
+
             return View();
         }
     }
