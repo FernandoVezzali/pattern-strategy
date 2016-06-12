@@ -1,7 +1,46 @@
-﻿
+﻿@model IEnumerable<Strategy.Web.Models.OrderViewModel>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "List of orders";
 }
 
-<h2>Index</h2>
+<h2>List of orders</h2>
 
+<p>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OriginContactName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DestinationContactName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShippingMethod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OriginContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DestinationContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippingMethod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+        </tr>
+    }
+
+</table>

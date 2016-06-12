@@ -1,4 +1,5 @@
 ﻿using Strategy.Domain;
+using Strategy.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,35 @@ namespace Strategy.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var order = new Order()
+            var calculator = new ShippingCostCalculatorService();
+
+            var orders = new List<OrderViewModel>();
+
+            orders.Add(new OrderViewModel()
             {
-                ShippingMethod = Order.ShippingOptions.FedEx,
-                Origin = new Address() { ContactName = "John Smith" }
-            };
+                OriginContactName = "Homer Simpson",
+                DestinationContactName = "John Smith",
+                ShippingMethod = Order.ShippingOptions.FedEx.ToString(),
+                Cost = calculator.CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.FedEx })
+            });
 
+            orders.Add(new OrderViewModel()
+            {
+                OriginContactName = "Homer Simpson",
+                DestinationContactName = "John Smith",
+                ShippingMethod = Order.ShippingOptions.UPS.ToString(),
+                Cost = calculator.CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.UPS })
+            });
 
+            orders.Add(new OrderViewModel()
+            {
+                OriginContactName = "Homer Simpson",
+                DestinationContactName = "John Smith",
+                ShippingMethod = Order.ShippingOptions.USPS.ToString(),
+                Cost = calculator.CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.USPS })
+            });
 
-            return View();
+            return View(orders);
         }
     }
 }
