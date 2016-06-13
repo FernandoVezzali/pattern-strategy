@@ -13,8 +13,6 @@ namespace Strategy.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var calculator = new ShippingCostCalculatorService();
-
             var orders = new List<OrderViewModel>();
 
             orders.Add(new OrderViewModel()
@@ -22,7 +20,7 @@ namespace Strategy.Web.Controllers
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
                 ShippingMethod = Order.ShippingOptions.FedEx.ToString(),
-                Cost = calculator.CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.FedEx })
+                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.FedEx })
             });
 
             orders.Add(new OrderViewModel()
@@ -30,7 +28,7 @@ namespace Strategy.Web.Controllers
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
                 ShippingMethod = Order.ShippingOptions.UPS.ToString(),
-                Cost = calculator.CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.UPS })
+                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.UPS })
             });
 
             orders.Add(new OrderViewModel()
@@ -38,7 +36,7 @@ namespace Strategy.Web.Controllers
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
                 ShippingMethod = Order.ShippingOptions.USPS.ToString(),
-                Cost = calculator.CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.USPS })
+                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.USPS })
             });
 
             return View(orders);

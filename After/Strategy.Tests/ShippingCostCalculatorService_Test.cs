@@ -12,6 +12,16 @@ namespace Strategy.Tests
     public class ShippingCostCalculatorService_Test
     {
         [TestMethod]
+        public void When_shipping_via_FedEx_The_shipping_cost_is_5()
+        {
+            var strategy = new FedExShippingCostStrategy();
+            var shippingCalculatorService = new ShippingCostCalculatorService(strategy);
+            var order = Mother.CreateOrder_FedEx();
+            var cost = shippingCalculatorService.CalculateShippingCost(order);
+            Assert.AreEqual(5.00d, cost);
+        }
+
+        [TestMethod]
         public void When_shipping_via_UPS_The_shipping_cost_is_425()
         {
             var strategy = new UPSShippingCostStrategy();
@@ -29,16 +39,6 @@ namespace Strategy.Tests
             var order = Mother.CreateOrder_USPS();
             var cost = shippingCalculatorService.CalculateShippingCost(order);
             Assert.AreEqual(3.00d, cost);
-        }
-
-        [TestMethod]
-        public void When_shipping_via_FedEx_The_shipping_cost_is_5()
-        {
-            var strategy = new FedExShippingCostStrategy();
-            var shippingCalculatorService = new ShippingCostCalculatorService(strategy);
-            var order = Mother.CreateOrder_FedEx();
-            var cost = shippingCalculatorService.CalculateShippingCost(order);
-            Assert.AreEqual(5.00d, cost);
         }
     }
 }
