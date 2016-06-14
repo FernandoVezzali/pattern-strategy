@@ -1,8 +1,10 @@
 # The Strategy Pattern 
 
-Simple exercise where we are going to implement The Strategy Pattern in a small MVC application.
+Simple exercise where we are going to apply The Strategy Pattern in a small C# application. 
 
-You can compare the application's code [before](https://github.com/FernandoVezzali/pattern-strategy/tree/master/Before) and [after](https://github.com/FernandoVezzali/pattern-strategy/tree/master/After) the refactoring process.
+Disclaimer: This is not about MVC, we will be focused in the domain layer. 
+
+Our case study will be the ShippingCostCalculator class, we will redesign this class, improving it by applying the strategy patter. 
 
 Folder Structure:
 
@@ -65,22 +67,24 @@ Let's start by opening the class [ShippingCostCalculatorService.cs](https://gith
         }        
     }  
 
-The only responsability of the class above is to calculate shipping costs, at the moment only 3 diffrent carriers are supported: FedEx, UPS and USPS. In terms of design, there's a few flaws: 
+Mind the class above, at first glance it looks good, the unit tests are passing and it works in run-time, but from a design perspective, it is bad. 
 
-1. If in the future we need to add a new carrier, let's say DHL, we would have to modify the implementation of this class and that violates the open/closed principle, that states: A class should be open for extension not for modification.
+Single Responsibility Principle:
 
-2. In a real world scenario the three methods: CalculateForUSPS, CalculateForUPS and CalculateForFedEx would have an algoritham and ideally they should be kept isolated from each other as any interference wouldn't be desireble.
+In the context of the Single Responsibility Principle (SRP) we define a responsibility to be “a reason for change.” If you can think of more than one motive for changing a class, then that class has more than one responsibility.
 
-3. If this class gets an order that contains an unknown carrier, an exception will br thrown and that's an undesireble side effect.
+Bob Martin
 
-This class is doing too many things, let's start by extracting the three methods responsible for the cost calculation. These methods are very similar, they take an order as an argument and return a double. With that said the let's create the following interface:
+The ShippingCostCalculator class has more than one responsibility, it should calculate shipping costs without knowing the different carriers (FedEx, UPS, etc...), as if in the future we need to add a new carrier, we would have to change the class.
+
+So the question is, how do we make this class calculate shipping costs without knowing the carriers ? The answer is simple, we just need to create add an abstraction:
 
     public interface IShippingCostStrategy
     {
         double Calculate(Order order);
     }
-    
-Now we can create 3 classes, implementing the interface we've just created:
+	
+The second step is to extract the three methods responsible for the cost calculation and make them implement our new interface: 
 
     public class FedExShippingCostStrategy : IShippingCostStrategy
     {
@@ -105,8 +109,8 @@ Now we can create 3 classes, implementing the interface we've just created:
             return 3.00d;
         }
     }
-    
-The last step is go back to the ShippingCostCalculatorService class and create a new constructor:
+	
+Last step is to get rid of the switch statement replacing it by a constructor that will receive an instance of any class that implements the interface:
 
     public class ShippingCostCalculatorService
     {
@@ -123,7 +127,9 @@ The last step is go back to the ShippingCostCalculatorService class and create a
         }
     }
 
-Now our class does only one thing, it calculates the shipping cost and even better, it doesn't need to know what's the carrier and there's no risk of throwing exceptions.
+Only one responsibility:
+
+> Now our class does only one thing, it calculates the shipping costs. Most importantly, it permorns the calculation without knowing the carriers neither their algorithams.
 
 Now let's check the metrics before and after for the [ShippingCostCalculatorService](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/Strategy.Domain/ShippingService/ShippingCostCalculatorService.cs) class:
 
@@ -134,3 +140,5 @@ Now let's check the metrics before and after for the [ShippingCostCalculatorServ
 | Depth of Inheritance           | 1          | 1         |
 | Class Coupling                 | 3          | 2         |
 | Lines of Code                  | 13         | 4         |
+
+You can compare the application's code [before](https://github.com/FernandoVezzali/pattern-strategy/tree/master/Before) and [after](https://github.com/FernandoVezzali/pattern-strategy/tree/master/After) the refactoring process.
