@@ -112,8 +112,6 @@ The second step is to remove the three methods responsible for the cost calculat
         }
     }
 
-Now the class depends on one abstraction, instead of three concrete classes !
-
 ## Last step
 
  Now that we have everything we need, it's just a matter of getting rid of the switch statement and inject the strategies by the constructor:
@@ -133,9 +131,9 @@ Now the class depends on one abstraction, instead of three concrete classes !
         }
     }
 
-Now the class has only one responsibility, it calculates the shipping costs. Most importantly, it permorns the calculation without knowing the carriers neither their algorithams.
+Now the class depends on an abstraction, instead of three concrete classes ! 
 
-Now let's check the metrics before and after for the [ShippingCostCalculatorService](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/Strategy.Domain/ShippingService/ShippingCostCalculatorService.cs) class:
+If you are still not convinced, let's chack the metrics results for the class after the refactoring process:
 
 | Metric                         | Before     | After     | 
 | ------------------------------ |:----------:|:----------:
@@ -145,4 +143,4 @@ Now let's check the metrics before and after for the [ShippingCostCalculatorServ
 | Class Coupling                 | 3          | 2         |
 | Lines of Code                  | 13         | 4         |
 
-You can compare the application's code [before](https://github.com/FernandoVezzali/pattern-strategy/tree/master/Before) and [after](https://github.com/FernandoVezzali/pattern-strategy/tree/master/After) the refactoring process.
+You can compare the class code [before]((https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCostCalculatorService.cs) and [after](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/Strategy.Domain/ShippingService/ShippingCostCalculatorService.cs) the refactoring process.
