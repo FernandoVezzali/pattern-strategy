@@ -71,11 +71,9 @@ Mind the class above, at first glance it looks good, the unit tests are passing 
 
 Single Responsibility Principle:
 
-In the context of the Single Responsibility Principle (SRP) we define a responsibility to be “a reason for change.” If you can think of more than one motive for changing a class, then that class has more than one responsibility.
+A class should have only a single responsibility, the ShippingCostCalculator class has more than one responsibility, it should calculate shipping costs without knowing the different carriers, as if in the future we need to add a new carrier, we would have to change this class and that would violate the Single Responsibility Principle (SRP).
 
-Bob Martin
-
-The ShippingCostCalculator class has more than one responsibility, it should calculate shipping costs without knowing the different carriers (FedEx, UPS, etc...), as if in the future we need to add a new carrier, we would have to change the class.
+> In the context of the Single Responsibility Principle (SRP) we define a responsibility to be “a reason for change.” If you can think of more than one motive for changing a class, then that class has more than one responsibility. - Bob Martin
 
 So the question is, how do we make this class calculate shipping costs without knowing the carriers ? The answer is simple, we just need to create add an abstraction:
 
