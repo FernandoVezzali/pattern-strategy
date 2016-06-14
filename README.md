@@ -133,7 +133,7 @@ The second step is to remove the three methods responsible for the cost calculat
 
 Now the class depends on an abstraction, instead of three concrete classes ! 
 
-If you are still not convinced, let's chack the metrics results for the class after the refactoring process:
+If you are still not convinced, let's check the metrics for the class:
 
 | Metric                         | Before     | After     | 
 | ------------------------------ |:----------:|:----------:
@@ -143,4 +143,4 @@ If you are still not convinced, let's chack the metrics results for the class af
 | Class Coupling                 | 3          | 2         |
 | Lines of Code                  | 13         | 4         |
 
-You can compare the class code [before]((https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCostCalculatorService.cs) and [after](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/Strategy.Domain/ShippingService/ShippingCostCalculatorService.cs) the refactoring process.
+You can compare the class code [before](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCostCalculatorService.cs) and [after](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/Strategy.Domain/ShippingService/ShippingCostCalculatorService.cs) the refactoring process.
