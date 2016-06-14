@@ -2,8 +2,6 @@
 
 Simple exercise where we are going to apply The Strategy Pattern in a small C# application. 
 
-Disclaimer: This is not about MVC, we will be focused in the domain layer. 
-
 Our case study will be the ShippingCostCalculator class, we will redesign this class, improving it by applying the strategy patter. 
 
 Folder Structure:
