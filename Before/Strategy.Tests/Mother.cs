@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Strategy.Domain.Order;
 
 namespace Strategy.Tests
 {
@@ -19,23 +20,25 @@ namespace Strategy.Tests
             };
         }
 
-        public static Order CreateOrder_USPS()
+        public static Order CreateOrder_USPS(ProductType productType)
         {
             return new Order()
             {
+                Product = productType,
                 ShippingMethod = Order.ShippingOptions.USPS,
                 Destination = Mother.CreateAddress_Destination(),
                 Origin = Mother.CreateAddress_Origin()
             };
         }
 
-        public static Order CreateOrder_UPS()
+        public static Order CreateOrder_UPS(double Weight = 0d)
         {
             return new Order()
             {
                 ShippingMethod = Order.ShippingOptions.UPS,
                 Destination = Mother.CreateAddress_Destination(),
-                Origin = Mother.CreateAddress_Origin()
+                Origin = Mother.CreateAddress_Origin(),
+                Weight = Weight
             };
         }
 

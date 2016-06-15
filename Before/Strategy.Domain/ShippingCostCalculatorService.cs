@@ -25,17 +25,26 @@ namespace Strategy.Domain
                     throw new UnknownOrderShippingMethodException();
 
             }
-
         }
 
         double CalculateForUSPS(Order order)
         {
-            return 3.00d;
+            double baseFee = 3.00d;
+            if (order.Product == Order.ProductType.Book)
+            {
+                return baseFee * 0.9;
+            }
+            return baseFee;
         }
 
         double CalculateForUPS(Order order)
         {
-            return 4.25d;
+            double baseFee = 4.25d;
+            if (order.Weight > 400)
+            {
+                return baseFee * 1.1;
+            }
+            return baseFee;
         }
 
         double CalculateForFedEx(Order order)

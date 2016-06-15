@@ -15,7 +15,16 @@ namespace Strategy.Domain
             USPS = 300,
         };
 
+        public enum ProductType
+        {
+            Book = 1,
+            Electronic = 2
+        };
+
         public ShippingOptions ShippingMethod { get; set; }
+        public ProductType Product { get; set; }
+
+        public double Weight { get; set; }
 
         public Address Destination { get; set; }
         public Address Origin { get; set; }
