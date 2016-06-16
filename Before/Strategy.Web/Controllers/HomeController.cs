@@ -20,7 +20,7 @@ namespace Strategy.Web.Controllers
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
                 ShippingMethod = ShippingOptions.FedEx.ToString(),
-                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order(ShippingOptions.FedEx))
+                Cost = new ShippingCalculator().CalculateCost(new Order(ShippingOptions.FedEx))
             });
 
             orders.Add(new OrderViewModel()
@@ -28,7 +28,7 @@ namespace Strategy.Web.Controllers
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
                 ShippingMethod = ShippingOptions.UPS.ToString(),
-                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order(ShippingOptions.UPS))
+                Cost = new ShippingCalculator().CalculateCost(new Order(ShippingOptions.UPS))
             });
 
             orders.Add(new OrderViewModel()
@@ -36,7 +36,7 @@ namespace Strategy.Web.Controllers
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
                 ShippingMethod = ShippingOptions.USPS.ToString(),
-                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order(ShippingOptions.USPS))
+                Cost = new ShippingCalculator().CalculateCost(new Order(ShippingOptions.USPS))
             });
 
             return View(orders);

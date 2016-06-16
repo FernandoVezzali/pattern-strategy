@@ -5,14 +5,14 @@ using System;
 namespace Strategy.Tests
 {
     [TestClass]
-    public class ShippingCostCalculatorServiceTest
+    public class ShippingCalculatorTest
     {
-        private ShippingCostCalculatorService _shippingCalculatorService;
+        private ShippingCalculator _shippingCalculator;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _shippingCalculatorService = new ShippingCostCalculatorService();
+            _shippingCalculator = new ShippingCalculator();
         }
 
         [TestMethod]
@@ -22,7 +22,7 @@ namespace Strategy.Tests
             var order = new Order(ShippingOptions.FedEx);
 
             // Act
-            var cost = _shippingCalculatorService.CalculateShippingCost(order);
+            var cost = _shippingCalculator.CalculateCost(order);
 
             Assert.AreEqual(5.00d, cost);
         }
@@ -34,7 +34,7 @@ namespace Strategy.Tests
             var order = new Order(ShippingOptions.FedEx, 310);
 
             // Act
-            var cost = _shippingCalculatorService.CalculateShippingCost(order);
+            var cost = _shippingCalculator.CalculateCost(order);
 
             Assert.AreEqual(5.5d, cost);
         }
@@ -46,7 +46,7 @@ namespace Strategy.Tests
             var order = new Order(ShippingOptions.UPS);
 
             // Act
-            var cost = _shippingCalculatorService.CalculateShippingCost(order);
+            var cost = _shippingCalculator.CalculateCost(order);
 
             Assert.AreEqual(4.25d, cost);
         }
@@ -58,7 +58,7 @@ namespace Strategy.Tests
             var order = new Order(ShippingOptions.UPS, 410);
 
             // Act
-            var cost = _shippingCalculatorService.CalculateShippingCost(order);
+            var cost = _shippingCalculator.CalculateCost(order);
 
             Assert.AreEqual(4.675d, Math.Round(cost, 3));
         }
@@ -70,7 +70,7 @@ namespace Strategy.Tests
             var order = new Order(ShippingOptions.USPS);
 
             // Act
-            var cost = _shippingCalculatorService.CalculateShippingCost(order);
+            var cost = _shippingCalculator.CalculateCost(order);
 
             Assert.AreEqual(3.00d, cost);
         }
@@ -82,7 +82,7 @@ namespace Strategy.Tests
             var order = new Order(ShippingOptions.USPS, 0d, ProductType.Book);
 
             // Act
-            var cost = _shippingCalculatorService.CalculateShippingCost(order);
+            var cost = _shippingCalculator.CalculateCost(order);
 
             Assert.AreEqual(2.7d, cost);
         }

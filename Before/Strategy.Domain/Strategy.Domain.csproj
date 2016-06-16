@@ -43,7 +43,7 @@
     <Compile Include="Address.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShippingCostCalculatorService.cs" />
+    <Compile Include="ShippingCalculator.cs" />
     <Compile Include="UnknownOrderShippingMethodException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

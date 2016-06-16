@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Strategy.Domain
 {
-    public class ShippingCostCalculatorService
+    public class ShippingCalculator
     {
-        public double CalculateShippingCost(Order order)
+        public double CalculateCost(Order order)
         {
             switch (order.ShippingMethod)
             {
