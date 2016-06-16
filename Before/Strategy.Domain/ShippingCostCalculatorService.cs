@@ -12,13 +12,13 @@ namespace Strategy.Domain
         {
             switch (order.ShippingMethod)
             {
-                case Order.ShippingOptions.FedEx:
+                case ShippingOptions.FedEx:
                     return CalculateForFedEx(order);
 
-                case Order.ShippingOptions.UPS:
+                case ShippingOptions.UPS:
                     return CalculateForUPS(order);
 
-                case Order.ShippingOptions.USPS:
+                case ShippingOptions.USPS:
                     return CalculateForUSPS(order);
 
                 default:
@@ -29,27 +29,17 @@ namespace Strategy.Domain
 
         double CalculateForUSPS(Order order)
         {
-            double baseFee = 3.00d;
-            if (order.Product == Order.ProductType.Book)
-            {
-                return baseFee * 0.9;
-            }
-            return baseFee;
+            return order.Product == ProductType.Book ? 3.00d * 0.9 : 3.00d;
         }
 
         double CalculateForUPS(Order order)
         {
-            double baseFee = 4.25d;
-            if (order.Weight > 400)
-            {
-                return baseFee * 1.1;
-            }
-            return baseFee;
+            return order.Weight > 400 ? 4.25d * 1.1 : 4.25d;
         }
 
         double CalculateForFedEx(Order order)
         {
-            return 5.00d;
+            return order.Weight > 300 ? 5.00d * 1.1 : 5.00d;
         }
     }
 }

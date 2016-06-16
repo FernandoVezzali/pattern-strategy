@@ -6,27 +6,30 @@ using System.Threading.Tasks;
 
 namespace Strategy.Domain
 {
+    public enum ShippingOptions
+    {
+        UPS = 100,
+        FedEx = 200,
+        USPS = 300,
+    };
+
+    public enum ProductType
+    {
+        Book = 1,
+        Electronic = 2
+    };
+
     public class Order
     {
-        public enum ShippingOptions
+        public Order(ShippingOptions shippingMethod, double weight = 0d, ProductType product = ProductType.Electronic)
         {
-            UPS = 100,
-            FedEx = 200,
-            USPS = 300,
-        };
+            ShippingMethod = shippingMethod;
+            Product = product;
+            Weight = weight;
+        }
 
-        public enum ProductType
-        {
-            Book = 1,
-            Electronic = 2
-        };
-
-        public ShippingOptions ShippingMethod { get; set; }
-        public ProductType Product { get; set; }
-
-        public double Weight { get; set; }
-
-        public Address Destination { get; set; }
-        public Address Origin { get; set; }
+        public ShippingOptions ShippingMethod { get; }
+        public ProductType Product { get; }
+        public double Weight { get; }
     }
 }

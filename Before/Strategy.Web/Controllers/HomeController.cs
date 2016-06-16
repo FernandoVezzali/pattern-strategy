@@ -19,24 +19,24 @@ namespace Strategy.Web.Controllers
             {
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
-                ShippingMethod = Order.ShippingOptions.FedEx.ToString(),
-                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.FedEx })
+                ShippingMethod = ShippingOptions.FedEx.ToString(),
+                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order(ShippingOptions.FedEx))
             });
 
             orders.Add(new OrderViewModel()
             {
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
-                ShippingMethod = Order.ShippingOptions.UPS.ToString(),
-                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.UPS })
+                ShippingMethod = ShippingOptions.UPS.ToString(),
+                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order(ShippingOptions.UPS))
             });
 
             orders.Add(new OrderViewModel()
             {
                 OriginContactName = "Homer Simpson",
                 DestinationContactName = "John Smith",
-                ShippingMethod = Order.ShippingOptions.USPS.ToString(),
-                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order() { ShippingMethod = Order.ShippingOptions.USPS })
+                ShippingMethod = ShippingOptions.USPS.ToString(),
+                Cost = new ShippingCostCalculatorService().CalculateShippingCost(new Order(ShippingOptions.USPS))
             });
 
             return View(orders);
