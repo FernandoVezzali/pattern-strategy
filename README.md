@@ -64,7 +64,7 @@ Our case study will be the [ShippingCalculator] (https://github.com/FernandoVezz
         }
     }
 
-Mind the code above, at first glance it looks good, the unit tests are passing and it does what it supposed to do: Calculate shipping costs, but from a design perspective, there's room for improvment. 
+Mind the code above, at first glance it looks good, the unit tests are passing and it does what it supposed to do: Calculate shipping costs. From a design perspective, there's room for improvement.
 
 ## Single Responsibility Principle:
 
