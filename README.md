@@ -8,62 +8,63 @@ Folder Structure:
 
 ```
   
-  └── Before
-      ├── Strategy.Tests
-      ├── Strategy.Web
-      └── Strategy.Domain
-          └── ShippingCostCalculatorService.cs 
+  +-- Before
+      +-- App.Tests
+      +-- App.Web
+      +-- App.Domain
+          +-- ShippingCalculator.cs 
       
-  └── After
-      ├── Strategy.Tests
-      ├── Strategy.Web
-      └── Strategy.Domain
-          └── ShippingService
-              ├── ShippingCostCalculatorService.cs
-              ├── IShippingCostStrategy.cs
-              ├── FedExShippingCostStrategy.cs
-              ├── UPSShippingCostStrategy.cs
-              └── USPSShippingCostStrategy.cs
+  +-- After
+      +-- App.Tests
+      +-- App.Web
+      +-- App.Domain
+          +-- ShippingCalculator.cs 	  
+          +-- Strategy
+              +-- IShippingCostStrategy.cs
+              +-- FedExStrategy.cs
+              +-- UPSStrategy.cs
+              +-- USPSStrategy.cs
               
 ``` 
 
-Let's start by opening the class [ShippingCostCalculatorService.cs](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCostCalculatorService.cs):
+Let's start by opening the class [ShippingCalculator.cs](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCalculator.cs):
 
-    public class ShippingCostCalculatorService
+    public class ShippingCalculator
     {
-        public double CalculateShippingCost(Order order)
+        public double CalculateCost(Order order)
         {
             switch (order.ShippingMethod)
             {
-              case Order.ShippingOptions.FedEx:
-                  return CalculateForFedEx(order);
-    
-              case Order.ShippingOptions.UPS:
-                  return CalculateForUPS(order);
-    
-              case Order.ShippingOptions.USPS:
-                  return CalculateForUSPS(order);
-    
-              default:
-                  throw new UnknownOrderShippingMethodException();
+                case ShippingOptions.FedEx:
+                    return CalculateForFedEx(order);
+
+                case ShippingOptions.UPS:
+                    return CalculateForUPS(order);
+
+                case ShippingOptions.USPS:
+                    return CalculateForUSPS(order);
+
+                default:
+                    throw new UnknownOrderShippingMethodException();
+
             }
         }
-        
+
         double CalculateForUSPS(Order order)
         {
-            return 3.00d;
+            return order.Product == ProductType.Book ? 3.00d * 0.9 : 3.00d;
         }
 
         double CalculateForUPS(Order order)
         {
-            return 4.25d;
+            return order.Weight > 400 ? 4.25d * 1.1 : 4.25d;
         }
 
         double CalculateForFedEx(Order order)
         {
-            return 5.00d;
-        }        
-    }  
+            return order.Weight > 300 ? 5.00d * 1.1 : 5.00d;
+        }
+    }
 
 Mind the class above, at first glance it looks good, the unit tests are passing and it works in run-time, but from a design perspective, it is bad. 
 
@@ -86,27 +87,27 @@ So the problem is, how do we make this class calculate shipping costs without kn
 	
 The second step is to remove the three methods responsible for the cost calculation and create 3 classes (3 strategies) and make each of them implement our interface: 
 
-    public class FedExShippingCostStrategy : IShippingCostStrategy
+    public class FedExStrategy : IShippingCostStrategy
     {
         public double Calculate(Order order)
         {
-            return 5.00d;
+            return order.Weight > 300 ? 5.00d * 1.1 : 5.00d;
         }
     }
     
-    public class UPSShippingCostStrategy : IShippingCostStrategy
+    public class USPSStrategy: IShippingCostStrategy
     {
         public double Calculate(Order order)
         {
-            return 4.25d;
+            return order.Product == ProductType.Book ? 3.00d * 0.9 : 3.00d;
         }
     }
     
-    public class USPSShippingCostStrategy : IShippingCostStrategy
+    public class UpsStrategy : IShippingCostStrategy
     {
         public double Calculate(Order order)
         {
-            return 3.00d;
+            return order.Weight > 400 ? 4.25d * 1.1 : 4.25d;
         }
     }
 
@@ -114,18 +115,18 @@ The second step is to remove the three methods responsible for the cost calculat
 
  Now that we have everything we need, it's just a matter of getting rid of the switch statement and inject the strategies by the constructor:
 
-    public class ShippingCostCalculatorService
+    public class ShippingCalculator
     {
-        readonly IShippingCostStrategy shippingCostStrategy;
+        readonly IShippingCostStrategy _shippingCostStrategy;
 
-        public ShippingCostCalculatorService(IShippingCostStrategy shippingCostStrategy)
+        public ShippingCalculator(IShippingCostStrategy shippingCostStrategy)
         {
-            this.shippingCostStrategy = shippingCostStrategy;
+            this._shippingCostStrategy = shippingCostStrategy;
         }
 
-        public double CalculateShippingCost(Order order)
+        public double CalculateCost(Order order)
         {
-           return shippingCostStrategy.Calculate(order);
+            return _shippingCostStrategy.Calculate(order);
         }
     }
 
@@ -135,8 +136,8 @@ If you are still not convinced, let's check the metrics for the class:
 
 | Metric                         | Before     | After     | 
 | ------------------------------ |:----------:|:----------:
-| Maintainability Index          | 84         | 85        |
-| Cyclomatic Complexity          | 8          | 2         |
+| Maintainability Index          | 82         | 85        |
+| Cyclomatic Complexity          | 11         | 2         |
 | Depth of Inheritance           | 1          | 1         |
 | Class Coupling                 | 3          | 2         |
 | Lines of Code                  | 13         | 4         |
