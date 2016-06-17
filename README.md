@@ -66,7 +66,7 @@ Our case study will be the [ShippingCalculator] (https://github.com/FernandoVezz
 
 Mind the code above, at first glance it looks good, the unit tests are passing and it does what it supposed to do: Calculate shipping costs. From a design perspective, there's room for improvement.
 
-## Single Responsibility Principle:
+## Single Responsibility Principle
 
 A class should have only a single responsibility, the ShippingCalculator class has more than one, it should calculate shipping costs without knowing the different carriers, as if in the future we need to add a new carrier, that would require us to change this class and that would violate the Single Responsibility Principle (SRP).
 
