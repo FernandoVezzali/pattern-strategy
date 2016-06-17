@@ -8,26 +8,26 @@ Folder Structure:
 
 ```
   
-  +-- Before
-      +-- App.Tests
-      +-- App.Web
-      +-- App.Domain
-          +-- ShippingCalculator.cs 
+  └── Before
+      ├── App.Tests
+      ├── App.Web
+      └── App.Domain
+          └── ShippingCalculator.cs 
       
-  +-- After
-      +-- App.Tests
-      +-- App.Web
-      +-- App.Domain
-          +-- ShippingCalculator.cs 	  
-          +-- Strategy
-              +-- IShippingCostStrategy.cs
-              +-- FedExStrategy.cs
-              +-- UPSStrategy.cs
-              +-- USPSStrategy.cs
+  └── After
+      ├── App.Tests
+      ├── App.Web
+      └── App.Domain
+          ├── ShippingCalculator.cs 	  
+          └── Strategy
+              ├── IShippingCostStrategy.cs
+              ├── FedExStrategy.cs
+              ├── UPSStrategy.cs
+              └── USPSStrategy.cs
               
 ``` 
 
-Let's start by opening the class [ShippingCalculator.cs](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCalculator.cs):
+Let's start by opening the class [ShippingCalculator.cs](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/App.Domain/ShippingCalculator.cs):
 
     public class ShippingCalculator
     {
@@ -142,4 +142,4 @@ If you are still not convinced, let's check the metrics for the class:
 | Class Coupling                 | 3          | 2         |
 | Lines of Code                  | 13         | 4         |
 
-You can compare the class code [before](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCostCalculatorService.cs) and [after](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/Strategy.Domain/ShippingService/ShippingCostCalculatorService.cs) the refactoring process.
+You can compare the class code [before](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/App.Domain/ShippingCalculator.cs) and [after](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/App.Domain/ShippingCalculator.cs) the refactoring process.
