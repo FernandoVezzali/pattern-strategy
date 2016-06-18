@@ -2,32 +2,30 @@
 
 Simple exercise where we are going to apply The Strategy Pattern in a small C# application. 
 
-Our case study will be the ShippingCostCalculator class, we will redesign this class, improving it by applying the strategy patter. 
-
 Folder Structure:
 
 ```
   
-  +-- Before
-      +-- App.Tests
-      +-- App.Web
-      +-- App.Domain
-          +-- ShippingCalculator.cs 
+  └── Before
+      ├── App.Tests
+      ├── App.Web
+      └── App.Domain
+          └── ShippingCalculator.cs 
       
-  +-- After
-      +-- App.Tests
-      +-- App.Web
-      +-- App.Domain
-          +-- ShippingCalculator.cs 	  
-          +-- Strategy
-              +-- IShippingCostStrategy.cs
-              +-- FedExStrategy.cs
-              +-- UPSStrategy.cs
-              +-- USPSStrategy.cs
+  └── After
+      ├── App.Tests
+      ├── App.Web
+      └── App.Domain
+          ├── ShippingCalculator.cs 	  
+          └── Strategy
+              ├── IShippingCostStrategy.cs
+              ├── FedExStrategy.cs
+              ├── UPSStrategy.cs
+              └── USPSStrategy.cs
               
 ``` 
 
-Let's start by opening the class [ShippingCalculator.cs](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCalculator.cs):
+Our case study will be the [ShippingCalculator] (https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/App.Domain/ShippingCalculator.cs) class, we will redesign this class and apply the strategy patter, let's start by opening the class:
 
     public class ShippingCalculator
     {
@@ -66,17 +64,17 @@ Let's start by opening the class [ShippingCalculator.cs](https://github.com/Fern
         }
     }
 
-Mind the class above, at first glance it looks good, the unit tests are passing and it works in run-time, but from a design perspective, it is bad. 
+Mind the code above, at first glance it looks good, the unit tests are passing and it does what it supposed to do: Calculate shipping costs. From a design perspective, there's room for improvement.
 
-## Single Responsibility Principle:
+## Single Responsibility Principle
 
-A class should have only a single responsibility, the ShippingCostCalculator class has more than one responsibility, it should calculate shipping costs without knowing the different carriers, as if in the future we need to add a new carrier, we would have to change this class and that would violate the Single Responsibility Principle (SRP).
+A class should have only a single responsibility, the ShippingCalculator class has more than one, it should calculate shipping costs without knowing the different carriers, as if in the future we need to add a new carrier, that would require us to change this class and that would violate the Single Responsibility Principle (SRP).
 
 > In the context of the Single Responsibility Principle (SRP) we define a responsibility to be “a reason for change.” If you can think of more than one motive for changing a class, then that class has more than one responsibility. - Bob Martin
 
 ## Creating an abstraction
 
-So the problem is, how do we make this class calculate shipping costs without knowing carrier details ? All the three carriers share two things in common: They take an order as a parameter and return a double. We can now create an interface with the same signature:
+So the challenge is, how do we make this class calculate shipping costs without knowing carrier details ? All the three carriers share two things in common: They take an order as a parameter and return a double. We can now create an interface with the same signature:
 
     public interface IShippingCostStrategy
     {
@@ -130,7 +128,7 @@ The second step is to remove the three methods responsible for the cost calculat
         }
     }
 
-Now the class depends on an abstraction, instead of three concrete classes ! 
+Now the class depends on an abstraction, instead of three concrete classes.
 
 If you are still not convinced, let's check the metrics for the class:
 
@@ -142,4 +140,4 @@ If you are still not convinced, let's check the metrics for the class:
 | Class Coupling                 | 3          | 2         |
 | Lines of Code                  | 13         | 4         |
 
-You can compare the class code [before](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/Strategy.Domain/ShippingCostCalculatorService.cs) and [after](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/Strategy.Domain/ShippingService/ShippingCostCalculatorService.cs) the refactoring process.
+You can compare the class code [before](https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/App.Domain/ShippingCalculator.cs) and [after](https://github.com/FernandoVezzali/pattern-strategy/blob/master/After/App.Domain/ShippingCalculator.cs) the refactoring process.
