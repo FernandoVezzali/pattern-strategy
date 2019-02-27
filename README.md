@@ -25,7 +25,7 @@ Folder Structure:
               
 ``` 
 
-Our case study will be the [ShippingCalculator] (https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/App.Domain/ShippingCalculator.cs) class, we will redesign this class and apply the strategy patter, let's start by opening the class:
+Our case study will be the [ShippingCalculator] (https://github.com/FernandoVezzali/pattern-strategy/blob/master/Before/App.Domain/ShippingCalculator.cs) class, we will redesign this class and apply the strategy pattern, let's start by opening the class:
 
     public class ShippingCalculator
     {
@@ -74,7 +74,7 @@ A class should have only a single responsibility, the ShippingCalculator class h
 
 ## Creating an abstraction
 
-So the challenge is, how do we make this class calculate shipping costs without knowing carrier details ? All the three carriers share two things in common: They take an order as a parameter and return a double. We can now create an interface with the same signature:
+So the challenge is, how do we make this class calculate shipping costs without knowing carrier details? All the three carriers share two things in common: They take an order as a parameter and return a double. We can now create an interface with the same signature:
 
     public interface IShippingCostStrategy
     {
@@ -128,7 +128,7 @@ The second step is to remove the three methods responsible for the cost calculat
         }
     }
 
-Now the class depends on an abstraction, instead of three concrete classes.
+Now the class depends upon abstraction, instead of three concrete classes.
 
 If you are still not convinced, let's check the metrics for the class:
 
